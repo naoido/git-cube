@@ -20,6 +20,8 @@ services:
       context: git-cube-front
     ports:
       - "3000:3000"
+    volumes:
+      - ./git-cube-front/git-cube/src/:/app/src
     networks:
       - internal_network
 
