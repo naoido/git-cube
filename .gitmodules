@@ -1,0 +1,9 @@
+[submodule "git-cube-front"]
+	path = git-cube-front
+	url = https://github.com/naoido/git-cube-front.git
+[submodule "git-cube-backend"]
+	path = git-cube-backend
+	url = https://github.com/naoido/git-cube-backend.git
+[submodule "git-cube-ai"]
+	path = git-cube-ai
+	url = https://github.com/naoido/git-cube-ai.git

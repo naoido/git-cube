@@ -1,0 +1,41 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    networks:
+      - internal_network
+      - external_network
+
+  front-dev:
+    build:
+      context: git-cube-backend
+    ports:
+      - "3000:3000"
+    inetworks:
+      - internal_network
+
+  mysql:
+    image: mysql:latest
+    volumes:
+      - ./git-cube-db/data:/var/lib/mysql
+      - ./git-cube-db/init:/docker-entrypoint-initdb.d
+      - ./git-cube-db/mysql.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - "3306:3306"
+    networks:
+      - internal_network
+    env_file:
+      - ./git-cube-db/conf.env
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p $$MYSQL_ROOT_PASSWORD" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+networks:
+  internal_network:
+    internal: true
+  external_network:
